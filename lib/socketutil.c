@@ -18,8 +18,14 @@ struct sockaddr_in* createIpv4Address(char *ip, int port){
     // };
     address->sin_family = AF_INET;
     address->sin_port = htons(port); // will flip the bites to convert in to Network Byte Order
-    inet_pton(AF_INET, ip, &address->sin_addr.s_addr); // the last part is where it will return the value
+
+    if(strlen(ip) == 0){
+        address->sin_addr.s_addr = INADDR_ANY;
+    }else{
+        inet_pton(AF_INET, ip, &address->sin_addr.s_addr); // the last part is where it will return the value
     // after spesifying presentation form(version of IP) it will convert a string into an int
+    }
+
 
     return address;
 }
